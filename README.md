@@ -11,7 +11,7 @@
 - **Fetch()** is the part of react native. We don't have to import from third party.
 
 ### method: 'GET' & 'POST':
-- **Vew** details in [index.js]()
+- **Vew** details in [index.js](https://github.com/Engr-Asad-Hussain/BootCamp2020-Class08/blob/pre-requisite-01/index.js)
 - By default method="GET" is used.
 - "GET" is used to get some data from server.
 - fetch() returns a promise.
