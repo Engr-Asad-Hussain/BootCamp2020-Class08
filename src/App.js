@@ -14,7 +14,7 @@ function App() {
       console.log(data);
     }
     getRepositories();
-  }, []);
+  }, []); /*empty[]: Means it only renders useEffect() onces. */
 
   return (
     <div>
