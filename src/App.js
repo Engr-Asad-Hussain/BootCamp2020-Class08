@@ -1,44 +1,44 @@
 import React, { useEffect, useState } from 'react';
 
 function App() {
-  const [repos, setRepos] = useState([]); /* [] because we'll use useState in fetch() and fetch returns promise in array format. Because this API returns array [{}, {}, {}, ...]*/
+  let data = {title: "Data Loading....."};
+  let [todo, setTodo] = useState(data);
+  let [isFetching, setFetching] = useState();
+  let count = 0;
 
   useEffect( ()=>{
-    async function getRepositories() {
-      const response = await fetch('https://api.github.com/users/Engr-Asad-Hussain/repos'); 
-        /*
-          [x] fetch() returns a promise therefore we have to assign some variable to it.
-        */
-      const data = await response.json();
-      setRepos(data);
-      console.log(data);
+    async function getAPI() {
+      setFetching(true);
+      const api = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+      const jsonFormat = await api.json();
+      console.log(jsonFormat);
+      setTodo(jsonFormat);
+      setFetching(false);
     }
-    getRepositories();
-  }, []);
+    getAPI();
+  }, [count]); /* Only re-renders when the count value will change.*/
+
+  /*
+    [x] We have made this if statement to show that data is still fetching, as soon as 
+        data is fetched, it renders on the web.  
+  */
+  if (isFetching) {
+    return (
+      <div>Data Fetching ...</div>
+    );
+  }
+  /*
+    [x] We know that App() is a function and if there are multiple returns, so
+        after 1st return it will not return another returns 
+  */
 
   return (
     <div>
-      <h1>Names of Github Repositories</h1>
+      <h1>Json Placeholder</h1>
       <ul>
-        {repos.map( (reposObject, index)=>{
-          return(
-            <li key={reposObject.id}>{reposObject.name}</li>
-            /* 
-              [x] Here we don't use index because repos returns [{}, {}, {}, ...]
-              [x] And each object {} has the id attribute which is unique
-              [x] So we can use id to keep unique <li>
-              [x] We can use index as well.
-            */
-          );
-        })}
+        <li>Data: {todo.title}</li>
       </ul>
     </div>
   );
 }
 export default App;
-
-/*
-  [x] In React whatever we want to render on web will be a Hook.
-  [x] Whenever we want to update the DOM, we must use Hook.
-  [x] So, to fetch data React provides another Hook as useEffect()
-*/
