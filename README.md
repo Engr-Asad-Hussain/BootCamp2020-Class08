@@ -13,6 +13,30 @@
 - useEffect is used to fetch data in react from the servers.
 
 ### useEffect() in Depth:
+```
+let data = {title: "Data Loading"};
+let [todo, setTodo] = useState(data);
+let count = 0;
+
+useEffect( ()=>{
+  async function getAPI() {
+    const api = await fetch('https://jsonplaceholder.typicode.com/todos/1');
+    const jsonFormat = await api.json();
+    console.log(jsonFormat);
+    setTodo(jsonFormat);
+  }
+  getAPI();
+}, [count]); /* Only re-renders when the count value will change.*/
+
+return (
+  <div>
+    <h1>Json Placeholder</h1>
+    <ul>
+      <li>Data: {todo.title}</li>
+    </ul>
+  </div>
+);
+```
 - **Drawback:**
   - Now, if you observe that, it prints 'Data Loading' then it prints "title". It means that useEffect() is called after the component renders.
   - So, whenever the DOM re-render any component useEffect() calls automatically. This degrades the performance of our application because there are many things on the page that need to be updated, so we don't want on each render our useEffect() will be called automatically.
